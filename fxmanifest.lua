@@ -21,7 +21,7 @@ ui_page 'html/ui.html'
 files {
     'html/ui.html',
     'html/css/*.css',
-    'html/fonts/*.otf',
+    'html/fonts/*.ttf',
     'html/img/*.png',
     'html/img/*.jpg',
     'html/js/*.js'
