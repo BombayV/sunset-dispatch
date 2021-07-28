@@ -15,3 +15,14 @@ server_scripts {
     'config/config_sv.lua',
     'server/*.lua'
 }
+
+ui_page 'html/ui.html'
+
+files {
+    'html/ui.html',
+    'html/css/*.css',
+    'html/fonts/*.otf',
+    'html/img/*.png',
+    'html/img/*.jpg',
+    'html/js/*.js'
+}
