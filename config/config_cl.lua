@@ -1,4 +1,4 @@
-Config  = Config or {}
+Config = {}
 
 Config['police'] = {
     sprite  = 523, -- Design of the blip
@@ -18,6 +18,9 @@ Config.waitBeforeRemoval = 30000 -- Wait time before removing blip
 
 -- Commands Names
 Config.stealVehCommand = 'forzar' -- Steal Command
+Config.openDispatch = 'opendTest'
+Config.openDispatchDesc = 'Abre el menu de la policia'
+Config.openDispatchKey = 'K'
 
 -- Color list
 Config['ColorNames'] = {

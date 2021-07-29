@@ -1,4 +1,4 @@
-Config = Config or {}
+Config = {}
 
 -- Commands
 Config.policeCommand = 'a'

@@ -40,11 +40,9 @@ RegisterNetEvent('sunset:setNewWaypoint', function(x, y, z, job)
 				isWaypoint = true
 				currentCall = false
 				break
-			end
-			if IsControlJustReleased(1, 38) and not isWaypoint then
+			elseif IsControlJustReleased(1, 38) and not isWaypoint then
 				endCurrentCall('policePlayerCreation')
 				RemoveBlip(blip)
-				blip = nil
 				isWaypoint = true
 				currentCall = false
 				break
@@ -55,4 +53,15 @@ RegisterNetEvent('sunset:setNewWaypoint', function(x, y, z, job)
 	if blip ~= nil then
 		beginBlipRemoval(blip)
 	end
+end)
+
+RegisterNetEvent('sunset:registerNewSlide')
+AddEventHandler('sunset:registerNewSlide', function(text, model, x, y)
+	SendNuiMessage({
+		action = 'insertData',
+		text = text,
+		model = model,
+		coordsX = x,
+		coordsY = y
+	})
 end)

@@ -9,7 +9,8 @@ const sel = doc.getElementById('dp-select');
 const slideNum = doc.getElementById('num-slides')
 const timeNum = doc.getElementById('num-time')
 
-const slides = doc.getElementsByClassName("container-slides");
+const slides = doc.getElementsByClassName('container-slides');
+const wrapper = doc.getElementById('wrapper')
 
 let currentSlide = 0;
 let i;
@@ -86,3 +87,15 @@ before.addEventListener("click", () => {
         timeNum.textContent =  slides[currentSlide - 1].getAttribute('data-time');
     }
 });
+
+const fetchNUI = async (cbname, data) => {
+    const options = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json; charset=UTF-8'
+        },
+        body: JSON.stringify(data)
+    };
+    const resp = await fetch(`https://sunset-dispatch/${cbname}`, options);
+    return await resp.json();
+}
