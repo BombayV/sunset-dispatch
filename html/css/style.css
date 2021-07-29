@@ -1,6 +1,10 @@
 @font-face{font-family:def;src:url(../fonts/KumbhSans-Regular.ttf);font-display:swap}
 @font-face{font-family:defbold;src:url(../fonts/KumbhSans-Bold.ttf);font-display:swap}
 
+*:focus {
+    outline: none;
+}
+
 .wrapper {
     position: absolute;
     display: flex;

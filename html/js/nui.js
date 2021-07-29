@@ -4,11 +4,17 @@ const after = doc.getElementById('after');
 const loc = doc.getElementById('location');
 
 const preview = doc.getElementById('preview')
+const sel = doc.getElementById('dp-select');
 
 const slideNum = doc.getElementById('num-slides')
 const timeNum = doc.getElementById('num-time')
 
+const slides = doc.getElementsByClassName("container-slides");
 
+let currentSlide = 0;
+let i;
+
+// Selector for tabs
 function openTab(target, className, settings) {
     let i, tabcontent;
     let id = doc.getElementById(target)
@@ -30,7 +36,6 @@ function openTab(target, className, settings) {
     }
 }
 
-const sel = doc.getElementById('dp-select');
 sel.addEventListener('change', function(e) {
     switch (sel.value) {
         case 'dispatch':
@@ -45,11 +50,7 @@ sel.addEventListener('change', function(e) {
     }
 }, false);
 
-let currentSlide = 0;
-let i;
-
-const slides = doc.getElementsByClassName("container-slides");
-
+// Arrows for dispatch
 after.addEventListener("click", () => {
     if (slides.length > 0) {
         currentSlide++
