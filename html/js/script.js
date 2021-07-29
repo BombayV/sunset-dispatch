@@ -1,11 +1,10 @@
-const slideNum = doc.getElementById('num-slides')
-
 let num = 0
+const mainCont = doc.getElementById('main-container')
 doc.getElementById('test').addEventListener('click', () => {
-    const mainCont = doc.getElementById('main-container')
     const cont = doc.createElement('div');
     const text = doc.createElement('span');
     const img = doc.createElement('img');
+    let time = new Date().toLocaleTimeString()
 
     cont.classList.add('container-slides');
     text.classList.add('slide-text');
@@ -14,6 +13,7 @@ doc.getElementById('test').addEventListener('click', () => {
     text.innerHTML = "jdoasjdo sajd jso"
     img.src = "./img/adder.png"
 
+    cont.setAttribute('data-time', time)
     cont.id = num++
     cont.appendChild(text);
     cont.appendChild(img);

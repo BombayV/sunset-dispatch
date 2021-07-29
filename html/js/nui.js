@@ -2,7 +2,12 @@ const doc = document;
 const before = doc.getElementById('before');
 const after = doc.getElementById('after');
 const loc = doc.getElementById('location');
+
 const preview = doc.getElementById('preview')
+
+const slideNum = doc.getElementById('num-slides')
+const timeNum = doc.getElementById('num-time')
+
 
 function openTab(target, className, settings) {
     let i, tabcontent;
@@ -59,6 +64,7 @@ after.addEventListener("click", () => {
         }
         slides[currentSlide - 1].style.opacity = "1";
         slideNum.textContent = `${currentSlide} /${slides.length}`
+        timeNum.textContent =  slides[currentSlide - 1].getAttribute('data-time');
     }
 });
   
@@ -76,5 +82,6 @@ before.addEventListener("click", () => {
         }
         slides[currentSlide - 1].style.opacity = "1";
         slideNum.textContent = `${currentSlide} /${slides.length}`
+        timeNum.textContent =  slides[currentSlide - 1].getAttribute('data-time');
     }
 });
