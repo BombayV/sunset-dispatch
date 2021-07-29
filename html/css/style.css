@@ -173,10 +173,11 @@ select optgroup {
     font-family: def;
     font-weight: 700;
     color: #444444;
+    margin: 1.5%;
 }
 
 .slide-img {
-    margin-top: 2.5%;
+    margin-bottom: 1.5%;
     width: 25vh;
     border-radius: 0.6vh;
 }

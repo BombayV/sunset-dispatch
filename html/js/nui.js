@@ -3,14 +3,15 @@ const before = doc.getElementById('before');
 const after = doc.getElementById('after');
 const loc = doc.getElementById('location');
 
-const preview = doc.getElementById('preview')
+const preview = doc.getElementById('preview');
 const sel = doc.getElementById('dp-select');
 
-const slideNum = doc.getElementById('num-slides')
-const timeNum = doc.getElementById('num-time')
+const slideNum = doc.getElementById('num-slides');
+const timeNum = doc.getElementById('num-time');
+const titleNum = doc.getElementById('num-title');
 
 const slides = doc.getElementsByClassName('container-slides');
-const wrapper = doc.getElementById('wrapper')
+const wrapper = doc.getElementById('wrapper');
 
 let currentSlide = 0;
 let i;
@@ -40,50 +41,48 @@ function openTab(target, className, settings) {
 sel.addEventListener('change', function(e) {
     switch (sel.value) {
         case 'dispatch':
-            console.log(sel.value)
-            openTab('dispatch', 'dp-tabs')
+            openTab('dispatch', 'dp-tabs');
         break;
 
         case 'officers':
-            console.log(sel.value)
-            openTab('officers', 'dp-tabs')
+            openTab('officers', 'dp-tabs');
         break;
     }
 }, false);
 
 // Arrows for dispatch
-after.addEventListener("click", () => {
+after.addEventListener('click', () => {
     if (slides.length > 0) {
         currentSlide++
         if (preview.style.display != 'none') {
-            preview.style.display = 'none'
+            preview.style.display = 'none';
         }
         for (i = 0; i < slides.length; i++) {
           slides[i].style.opacity = "0";  
         }
         if (currentSlide > slides.length) {
-          currentSlide = 1
+          currentSlide = 1;
         }
         slides[currentSlide - 1].style.opacity = "1";
-        slideNum.textContent = `${currentSlide} /${slides.length}`
+        slideNum.textContent = `${currentSlide} /${slides.length}`;
         timeNum.textContent =  slides[currentSlide - 1].getAttribute('data-time');
     }
 });
   
-before.addEventListener("click", () => {
+before.addEventListener('click', () => {
     if (slides.length > 0) {
         currentSlide--
         if (preview.style.display != 'none') {
-            preview.style.display = 'none'
+            preview.style.display = 'none';
         }
         for (i = 0; i < slides.length; i++) {
           slides[i].style.opacity = "0";  
         }
         if (currentSlide < 1) {
-          currentSlide = slides.length
+          currentSlide = slides.length;
         }
         slides[currentSlide - 1].style.opacity = "1";
-        slideNum.textContent = `${currentSlide} /${slides.length}`
+        slideNum.textContent = `${currentSlide} /${slides.length}`;
         timeNum.textContent =  slides[currentSlide - 1].getAttribute('data-time');
     }
 });

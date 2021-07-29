@@ -12,6 +12,10 @@ window.addEventListener('message', (e) => {
     }
 })
 
+doc.getElementById('test').addEventListener('click', ()=>{
+    insertNewSlide('EL mensaje de la persona ira aqui y pues bueno. No se que mas poner para alargar este texto', 'adder', 'verde', 'rojo','10', '10')
+})
+
 doc.onkeyup = event => {
     if (event.key == 'Escape') {
         wrapper.style.display = 'none';
@@ -19,23 +23,27 @@ doc.onkeyup = event => {
     }
 }
 
-function insertNewSlide(string, model, x, y) {
+function insertNewSlide(message, model, primary, secondary, x, y) {
     const cont = doc.createElement('div');
     const text = doc.createElement('span');
+    const vehText = doc.createElement('span')
     const img = doc.createElement('img');
     let time = new Date().toLocaleTimeString()
 
     cont.classList.add('container-slides');
     text.classList.add('slide-text');
+    vehText.classList.add('slide-text');
     img.classList.add('slide-img');
 
-    text.innerHTML = toString(text)
-    img.src = `./img/${model}.png`
+    text.textContent = message
+    vehText.textContent = 'El vehiculo era de color ' + primary + ' y ' + secondary
+    img.src = `./img/${model}.webp`
 
     cont.setAttribute('data-time', time)
     cont.setAttribute('data-x', x)
     cont.setAttribute('data-y', y)
     cont.appendChild(text);
+    cont.appendChild(vehText);
     cont.appendChild(img);
 
     mainCont.appendChild(cont);
