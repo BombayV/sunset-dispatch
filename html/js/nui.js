@@ -1,6 +1,8 @@
-const doc = document
-const before = doc.getElementById('before')
-const after = doc.getElementById('after')
+const doc = document;
+const before = doc.getElementById('before');
+const after = doc.getElementById('after');
+const loc = doc.getElementById('location');
+const preview = doc.getElementById('preview')
 
 function openTab(target, className, settings) {
     let i, tabcontent;
@@ -44,26 +46,35 @@ let i;
 const slides = doc.getElementsByClassName("container-slides");
 
 after.addEventListener("click", () => {
-    console.log('b')
-    currentSlide++
-    for (i = 0; i < slides.length; i++) {
-      slides[i].style.opacity = "0";  
+    if (slides.length > 0) {
+        currentSlide++
+        if (preview.style.display != 'none') {
+            preview.style.display = 'none'
+        }
+        for (i = 0; i < slides.length; i++) {
+          slides[i].style.opacity = "0";  
+        }
+        if (currentSlide > slides.length) {
+          currentSlide = 1
+        }
+        slides[currentSlide - 1].style.opacity = "1";
+        slideNum.textContent = `${currentSlide} /${slides.length}`
     }
-    if (currentSlide > slides.length) {
-      currentSlide = 1
-    }
-    slides[currentSlide - 1].style.opacity = "1";
-    doc.getElementById('num-slides').textContent = `${currentSlide} /${slides.length}`
 });
   
 before.addEventListener("click", () => {
-    console.log('a')
-    currentSlide--
-    for (i = 0; i < slides.length; i++) {
-      slides[i].style.opacity = "0";  
+    if (slides.length > 0) {
+        currentSlide--
+        if (preview.style.display != 'none') {
+            preview.style.display = 'none'
+        }
+        for (i = 0; i < slides.length; i++) {
+          slides[i].style.opacity = "0";  
+        }
+        if (currentSlide < 1) {
+          currentSlide = slides.length
+        }
+        slides[currentSlide - 1].style.opacity = "1";
+        slideNum.textContent = `${currentSlide} /${slides.length}`
     }
-    if (currentSlide < 1) {
-      currentSlide = slides.length
-    }
-    slides[currentSlide - 1].style.opacity = "1";
 });
