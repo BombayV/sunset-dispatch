@@ -24,3 +24,5 @@ files {
     'html/fonts/*.ttf',
     'html/js/*.js'
 }
+
+dependency 't-notify'
