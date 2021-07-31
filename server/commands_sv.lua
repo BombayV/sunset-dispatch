@@ -17,7 +17,6 @@ RegisterCommand(Config.policeCommand, function(source, args)
             local targetCoords = GetEntityCoords(GetPlayerPed(xPlayers[i]))
             local distance = #(coords - targetCoords)
             local message = table.concat(args, " ", 1)
-            TriggerClientEvent('sunset:setNewWaypoint', xPlayers[i], coords.x, coords.y, coords.z, 'police')
             if not inCall then
                 inCall = true
                 TriggerClientEvent('t-notify:client:Persist', xPlayers[i], {
@@ -30,8 +29,8 @@ RegisterCommand(Config.policeCommand, function(source, args)
                         sound = true
                     }
                 })
+                TriggerClientEvent('sunset:setNewWaypoint', xPlayers[i], coords.x, coords.y, coords.z, 'police')
             else
-
                 TriggerClientEvent('t-notify:client:Persist', xPlayers[i], {
                     id = 'policePlayerCreation',
                     step = 'update',
@@ -42,7 +41,7 @@ RegisterCommand(Config.policeCommand, function(source, args)
                         sound = true
                     }
                 })
-
+                TriggerClientEvent('sunset:updateWaypoint')
             end
         end
     end

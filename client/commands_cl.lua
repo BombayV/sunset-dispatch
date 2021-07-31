@@ -11,6 +11,7 @@ RegisterCommand(Config.stealVehCommand, function()
 		secondary = Config['ColorNames'][tostring(secondary)]
 		TriggerServerEvent('sunset:setVehicleNoti', model, plate, street, primary, secondary, 'police')
 		TriggerServerEvent('sunset:beginServerBlips', 'forzar')
+		registerNewSlide('Se veria una persona robando un' .. model, model, coords.x, coords.y)
 	else
 		exports['t-notify']:Alert({
 			style  =  'error',

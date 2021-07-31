@@ -14,10 +14,11 @@ local function beginBlipRemoval(curBlip)
 	RemoveBlip(oldBlip)
 end
 
+local currentCall = true
+local isWaypoint = false
+
 -- Events for waypoints
 RegisterNetEvent('sunset:setNewWaypoint', function(x, y, z, job)
-	local currentCall = true
-	local isWaypoint = false
 	local ped = PlayerPedId()
 	local coords = GetEntityCoords(ped)
 	CreateThread(function()
@@ -29,8 +30,8 @@ RegisterNetEvent('sunset:setNewWaypoint', function(x, y, z, job)
 		BeginTextCommandSetBlipName('STRING')
 		AddTextComponentSubstringPlayerName(Config[job].text)
 		EndTextCommandSetBlipName(blip)
-		
 		while currentCall do
+			print(currentCall)
 			if IsControlJustReleased(1, 38) and not isWaypoint then
 				endCurrentCall('policePlayerCreation')
 				TriggerServerEvent('sunset:getReceiverName', ped)
@@ -55,8 +56,17 @@ RegisterNetEvent('sunset:setNewWaypoint', function(x, y, z, job)
 	end
 end)
 
-RegisterNetEvent('sunset:registerNewSlide')
-AddEventHandler('sunset:registerNewSlide', function(text, model, x, y)
+RegisterNetEvent('sunset:updateWaypoint', function()
+	print("Before Update: " .. currentCall)
+	if currentCall then
+		currentCall = false
+		isWaypoint = true
+		blip = nil
+	end
+	print("After Update" .. currentCall)
+end)
+
+RegisterNetEvent('sunset:registerNewSlide', function(text, model, x, y)
 	SendNuiMessage({
 		action = 'insertData',
 		text = text,
@@ -65,3 +75,13 @@ AddEventHandler('sunset:registerNewSlide', function(text, model, x, y)
 		coordsY = y
 	})
 end)
+
+function registerNewSlide(text, model, x, y)
+	SendNuiMessage({
+		action = 'insertData',
+		text = text,
+		model = model,
+		coordsX = x,
+		coordsY = y
+	})
+end
