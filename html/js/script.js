@@ -39,8 +39,8 @@ function insertNewSlide(type, message, model, primary, x, y, title) {
     
         text.textContent = message.capitalize();
         vehText.textContent = color;
-        img.src = `https://entityevolution.me/img/${vehicle}.webp`;
-        img.onerror = img.src='https://entityevolution.me/img/onerror.png'
+        img.src = `https://bombayv.github.io/images.github.io/img/${vehicle}.webp`;
+        img.onerror = img.src='https://bombayv.github.io/images.github.io/img/onerror.png'
     
         cont.setAttribute('data-title', `Call Id: ${title}`)
         cont.setAttribute('data-time', time)
