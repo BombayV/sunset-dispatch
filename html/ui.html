@@ -13,30 +13,28 @@
 
     <link rel="preload" href="./fonts/KumbhSans-Bold.ttf" as="font" crossorigin="anonymous" />
     <link rel="preload" href="./fonts/KumbhSans-Regular.ttf" as="font" crossorigin="anonymous" />
+    <style>#wrapper { display: none; }</style>
 </head>
 
 <body>
     <div id="wrapper" class="wrapper">
-        <button id="test">a</button>
         <div class="container">
             <div class="dp-tabs-container">
                 <select class="dp-select" id="dp-select">
-                    <optgroup label="Pick a tab">
-                        <option value="dispatch">Dispatch</option>
-                        <option value="officers">Officers</option>
-                    </optgroup>
+                    <option value="dispatch">Dispatch</option>
+                    <option value="officers">Oficiales</option>
                 </select>
             </div>
             <div class="dp-tab-container">
                 <div id="dispatch" class="dp-tabs dispatch">
                     <div class="dp-header-container">
                         <span id="num-slides" class="header-text left">0 / 0</span>
-                        <span id="num-title" class="header-title">Some title</span>
-                        <span id="num-time" class="header-text right">10:30PM</span>
+                        <span id="num-title" class="header-title">Call Id</span>
+                        <span id="num-time" class="header-text right">No time</span>
                     </div>
                     <div id="main-container" class="dp-info-container">
                         <div id="preview" class="prev-cont">
-                            <span>Nothing here...</span>
+                            <span>Sin llamados...</span>
                         </div>
                         <!--Insert Data-->
                     </div>
@@ -47,7 +45,11 @@
                     </div>
                 </div>
                 <div id="officers" class="dp-tabs officers">
-                
+                    <div id="main-container" class="dp-info-container">
+                        <div id="preview" class="prev-cont">
+                            <span>Muy pronto...</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

@@ -1,25 +1,55 @@
 ESX = nil 
 
 TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
+GlobalState.callNumber = 0
 
 local timeout = false
 
-RegisterNetEvent('sunset:setVehicleNoti', function(model, plate, street, primary, secondary, job)
+RegisterNetEvent('sunset:setVehicleNoti', function(model, plate, street, primary, job)
     local source <const> = source
     local xPlayers = ESX.GetPlayers()
+    GlobalState.callNumber = GlobalState.callNumber + 1
     for i=1, #xPlayers, 1 do
         local xPlayer = ESX.GetPlayerFromId(xPlayers[i])
         if xPlayer.job.name == job then
             local coords = GetEntityCoords(GetPlayerPed(source))
             local targetCoords = GetEntityCoords(GetPlayerPed(xPlayers[i]))
             local distance = #(coords - targetCoords)
-            TriggerClientEvent('t-notify:client:Custom', xPlayers[i], {
-                style  =  'info',
-                duration  =  10000,
-                title  =  'Robo de Vehiculo',
-                message  =  '**~g~Modelo~g~: **' .. model .. '\n**~g~Placa~g~: **' .. plate .. '\n**~g~Calle~g~: **' .. street .. '\n**~g~Color Primario~g~: **' .. primary .. '\n**~g~Color Secundario~g~: **' .. secondary.. '\n **~r~Distancia~r~:** ' .. math.floor(distance) ..  'm\nPresiona [E] para aceptar',
-                sound  =  true
-            })
+            if primary == nil then
+                primary = 'No se encontro el color'
+            end
+            if model == 'NULL' then
+                model = 'Sin nombre'
+            end
+            if not inCall then
+                inCall = true
+                TriggerClientEvent('t-notify:client:Persist', xPlayers[i], {
+                    id = 'policePlayerCreation',
+                    step = 'start',
+                    options = {
+                        style = 'info',
+                        title  =  'Robo de Vehiculo | Index: ' .. GlobalState.callNumber,
+                        message  =  '**~g~Modelo~g~: **' .. model .. '\n**~g~Placa~g~: **' .. plate .. '\n**~g~Calle~g~: **' .. street .. '\n**~g~Color Primario~g~: **' .. primary .. '\n **~r~Distancia~r~:** ' .. math.floor(distance) ..  'm\nPresiona [E] para aceptar\n Presiona [Q] para cancelar',
+                        sound  =  true
+                    }
+                })
+                TriggerClientEvent('sunset:setNewWaypoint', xPlayers[i], coords.x, coords.y, coords.z, 'forzar')
+                return
+            elseif inCall then
+                TriggerClientEvent('t-notify:client:Persist', xPlayers[i], {
+                    id = 'policePlayerCreation',
+                    step = 'update',
+                    options = {
+                        style = 'info',
+                        title  =  'Robo de Vehiculo | Index: ' .. GlobalState.callNumber,
+                        message  =  '**~g~Modelo~g~: **' .. model .. '\n**~g~Placa~g~: **' .. plate .. '\n**~g~Calle~g~: **' .. street .. '\n**~g~Color Primario~g~: **' .. primary .. '\n **~r~Distancia~r~:** ' .. math.floor(distance) ..  'm\nPresiona [E] para aceptar\n Presiona [Q] para cancelar',
+                        sound  =  true
+                    }
+                })
+                TriggerClientEvent('sunset:updateWaypoint', xPlayers[i])
+                Wait(1000)
+                TriggerClientEvent('sunset:setNewWaypoint', xPlayers[i], coords.x, coords.y, coords.z, 'forzar')
+            end
         end
     end
 end)
@@ -33,7 +63,6 @@ RegisterNetEvent('sunset:beginServerBlips', function(job)
             actualJob = 'police'
         end
         if xPlayer.job.name == actualJob then
-            print(actualJob)
             local coords = GetEntityCoords(GetPlayerPed(source))
             local targetCoords = GetEntityCoords(GetPlayerPed(xPlayers[i]))
             local distance = #(coords - targetCoords)
@@ -54,16 +83,25 @@ RegisterNetEvent('sunset:getReceiverName', function()
                 style  =  'success',
                 duration  =  3000,
                 title  =  'LSPD Respuesta',
-                message  =  'El oficial ' .. name.. ' ha atendido la llamada!',
+                message  =  'El oficial ' .. name.. ' ha atendido la llamada #' .. GlobalState.callNumber,
                 sound  =  true
             })
         end
     end
 end)
 
-function randomId()
-    math.randomseed(os.time())
-    return string.gsub("xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx", "[xy]", function(c)
-        return string.format("%x", (c == "x") and math.random(0, 0xf) or math.random(8, 0xb))
-    end)
-end
+RegisterNetEvent('sunset:updateCall', function()
+    if inCall then
+        inCall = false
+    end
+end)
+
+RegisterNetEvent('sunset:updateDispatch', function(type, text, model, primary, x, y)
+    local xPlayers = ESX.GetPlayers()
+    for i=1, #xPlayers, 1 do
+        local xPlayer = ESX.GetPlayerFromId(xPlayers[i])
+        if xPlayer.job.name == 'police' then
+            TriggerClientEvent('sunset:registerNewSlide', xPlayers[i], type, text, model, primary, x, y, GlobalState.callNumber)
+        end
+    end
+end)

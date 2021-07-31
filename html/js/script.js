@@ -7,13 +7,9 @@ window.addEventListener('message', (e) => {
             break;
 
         case 'insertData':
-            insertNewSlide(e.data.text, e.data.model, e.data.coordsX, e.data.coordsY)
+            insertNewSlide(e.data.type, e.data.text, e.data.model, e.data.primary, e.data.coordsX, e.data.coordsY, e.data.title)
             break;
     }
-})
-
-doc.getElementById('test').addEventListener('click', ()=>{
-    insertNewSlide('EL mensaje de la persona ira aqui y pues bueno. No se que mas poner para alargar este texto', 'adder', 'verde', 'rojo','10', '10')
 })
 
 doc.onkeyup = event => {
@@ -23,31 +19,59 @@ doc.onkeyup = event => {
     }
 }
 
-function insertNewSlide(message, model, primary, secondary, x, y) {
-    const cont = doc.createElement('div');
-    const text = doc.createElement('span');
-    const vehText = doc.createElement('span')
-    const img = doc.createElement('img');
-    let time = new Date().toLocaleTimeString()
-
-    cont.classList.add('container-slides');
-    text.classList.add('slide-text');
-    vehText.classList.add('slide-text');
-    img.classList.add('slide-img');
-
-    text.textContent = message
-    vehText.textContent = 'El vehiculo era de color ' + primary + ' y ' + secondary
-    img.src = `./img/${model}.webp`
-
-    cont.setAttribute('data-time', time)
-    cont.setAttribute('data-x', x)
-    cont.setAttribute('data-y', y)
-    cont.appendChild(text);
-    cont.appendChild(vehText);
-    cont.appendChild(img);
-
-    mainCont.appendChild(cont);
-    for (i = 0; i < slides.length; i++) {
-        slideNum.textContent = `${currentSlide} /${slides.length}`
+function insertNewSlide(type, message, model, primary, x, y, title) {
+    if (type == "veh") {
+        let color = 'El vehiculo era de color ' + primary;
+        if (primary == undefined) {
+            color = 'No se puedo encontrar el color'
+        }
+        const cont = doc.createElement('div');
+        const text = doc.createElement('span');
+        const vehText = doc.createElement('span')
+        const img = doc.createElement('img');
+        let time = new Date().toLocaleTimeString();
+        let vehicle = model.toUpperCase()
+        console.log(vehicle)
+        cont.classList.add('container-slides');
+        text.classList.add('slide-text');
+        vehText.classList.add('slide-text');
+        img.classList.add('slide-img');
+    
+        text.textContent = message.capitalize();
+        vehText.textContent = color;
+        img.src = `https://entityevolution.me/img/${vehicle}.webp`;
+        img.onerror = img.src='https://entityevolution.me/img/onerror.png'
+    
+        cont.setAttribute('data-title', `Call Id: ${title}`)
+        cont.setAttribute('data-time', time)
+        cont.setAttribute('data-x', x)
+        cont.setAttribute('data-y', y)
+        cont.appendChild(text);
+        cont.appendChild(vehText);
+        cont.appendChild(img);
+    
+        mainCont.appendChild(cont);
+        for (i = 0; i < slides.length; i++) {
+            slideNum.textContent = `${currentSlide} /${slides.length}`
+        }
+    } else {
+        const cont = doc.createElement('div');
+        const text = doc.createElement('span');
+        let time = new Date().toLocaleTimeString();
+    
+        cont.classList.add('container-slides');
+        text.classList.add('slide-text');
+    
+        text.textContent = message.capitalize();
+    
+        cont.setAttribute('data-title', `Call Id: ${title}`);
+        cont.setAttribute('data-time', time);
+        cont.setAttribute('data-x', x);
+        cont.setAttribute('data-y', y);
+        cont.appendChild(text);
+        mainCont.appendChild(cont);
+        for (i = 0; i < slides.length; i++) {
+            slideNum.textContent = `${currentSlide} /${slides.length}`
+        }
     }
 }

@@ -6,6 +6,12 @@ CreateThread(function()
 		TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
 		Wait(250)
 	end
+
+	while ESX.GetPlayerData().job == nil do
+		Citizen.Wait(10)
+	end
+
+	ESX.PlayerData = ESX.GetPlayerData()
 end)
 
 local function beginBlipRemoval(curBlip)
@@ -19,6 +25,8 @@ local isWaypoint = false
 
 -- Events for waypoints
 RegisterNetEvent('sunset:setNewWaypoint', function(x, y, z, job)
+	currentCall = true
+	local isWaypoint = false
 	local ped = PlayerPedId()
 	local coords = GetEntityCoords(ped)
 	CreateThread(function()
@@ -31,10 +39,10 @@ RegisterNetEvent('sunset:setNewWaypoint', function(x, y, z, job)
 		AddTextComponentSubstringPlayerName(Config[job].text)
 		EndTextCommandSetBlipName(blip)
 		while currentCall do
-			print(currentCall)
 			if IsControlJustReleased(1, 38) and not isWaypoint then
 				endCurrentCall('policePlayerCreation')
 				TriggerServerEvent('sunset:getReceiverName', ped)
+				TriggerServerEvent('sunset:updateCall')
 				SetNewWaypoint(x, y)
 				RemoveBlip(blip)
 				blip = nil
@@ -43,6 +51,7 @@ RegisterNetEvent('sunset:setNewWaypoint', function(x, y, z, job)
 				break
 			elseif IsControlJustReleased(1, 44) and not isWaypoint then
 				endCurrentCall('policePlayerCreation')
+				TriggerServerEvent('sunset:updateCall')
 				RemoveBlip(blip)
 				isWaypoint = true
 				currentCall = false
@@ -57,31 +66,32 @@ RegisterNetEvent('sunset:setNewWaypoint', function(x, y, z, job)
 end)
 
 RegisterNetEvent('sunset:updateWaypoint', function()
-	print("Before Update: " .. currentCall)
 	if currentCall then
 		currentCall = false
-		isWaypoint = true
 		blip = nil
 	end
-	print("After Update" .. currentCall)
 end)
 
-RegisterNetEvent('sunset:registerNewSlide', function(text, model, x, y)
-	SendNuiMessage({
+RegisterNetEvent('sunset:registerNewSlide', function(type, text, model, primary, x, y, title)
+	SendNUIMessage({
 		action = 'insertData',
+		type = type,
 		text = text,
 		model = model,
+		primary = primary,
 		coordsX = x,
-		coordsY = y
+		coordsY = y,
+		title = title
 	})
 end)
 
-function registerNewSlide(text, model, x, y)
-	SendNuiMessage({
-		action = 'insertData',
-		text = text,
-		model = model,
-		coordsX = x,
-		coordsY = y
-	})
-end
+--Updating the jobs and info
+RegisterNetEvent('esx:playerLoaded')
+AddEventHandler('esx:playerLoaded', function(xPlayer)
+	ESX.PlayerData = xPlayer
+end)
+
+RegisterNetEvent('esx:setJob')
+AddEventHandler('esx:setJob', function(job)
+	ESX.PlayerData.job = job
+end)

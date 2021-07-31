@@ -10,13 +10,18 @@ RegisterCommand(Config.policeCommand, function(source, args)
         sound  =  true
     })
     local xPlayers = ESX.GetPlayers()
+    GlobalState.callNumber = GlobalState.callNumber + 1
     for i=1, #xPlayers, 1 do
         local xPlayer = ESX.GetPlayerFromId(xPlayers[i])
         if xPlayer.job.name == 'police' then
             local coords = GetEntityCoords(GetPlayerPed(source))
             local targetCoords = GetEntityCoords(GetPlayerPed(xPlayers[i]))
+            local message = 'Sin mensaje'
             local distance = #(coords - targetCoords)
-            local message = table.concat(args, " ", 1)
+            if args[1] ~= nil then
+                message = table.concat(args, " ", 1)
+            end
+            TriggerClientEvent('sunset:registerNewSlide', xPlayers[i], "player", tostring(message), 'none', 'none', coords.x, coords.y, GlobalState.callNumber)
             if not inCall then
                 inCall = true
                 TriggerClientEvent('t-notify:client:Persist', xPlayers[i], {
@@ -24,25 +29,26 @@ RegisterCommand(Config.policeCommand, function(source, args)
                     step = 'start',
                     options = {
                         style = 'info',
-                        title = 'Entorno LSPD',
+                        title = 'Entorno LSPD | Index: ' .. GlobalState.callNumber,
                         message = '**~g~Mensaje~g~:**' .. message .. '\n **~r~Distancia~r~:** ' .. math.floor(distance) ..  'm\nPresiona [E] para aceptar\n Presiona [Q] para cancelar',
                         sound = true
                     }
                 })
                 TriggerClientEvent('sunset:setNewWaypoint', xPlayers[i], coords.x, coords.y, coords.z, 'police')
-            else
+                return
+            elseif inCall then
                 TriggerClientEvent('t-notify:client:Persist', xPlayers[i], {
                     id = 'policePlayerCreation',
                     step = 'update',
                     options = {
                         style = 'info',
-                        title = 'Entorno LSPD',
+                        title = 'Entorno LSPD | Index: ' .. GlobalState.callNumber,
                         message = '**~g~Mensaje~g~:**' .. message .. '\n **~r~Distancia~r~:** ' .. math.floor(distance) ..  'm\nPresiona [E] para aceptar\n Presiona [Q] para cancelar',
                         sound = true
                     }
                 })
-                TriggerClientEvent('sunset:updateWaypoint')
-                Wait(100)
+                TriggerClientEvent('sunset:updateWaypoint', xPlayers[i])
+                Wait(1000)
                 TriggerClientEvent('sunset:setNewWaypoint', xPlayers[i], coords.x, coords.y, coords.z, 'police')
             end
         end

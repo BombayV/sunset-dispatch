@@ -14,14 +14,32 @@ RegisterNUICallback('close', function(_, cb)
     cb({})
 end)
 
+RegisterNUICallback('setCoords', function(data, cb)
+    if isOpen then
+        SetNewWaypoint(tonumber(data.x), tonumber(data.y))
+        exports['t-notify']:Alert({
+            style = 'success', 
+            message = 'Se ha marcado la localizacion a la llamada #' .. data.id
+        })
+    end
+    cb({})
+end)
+
 RegisterCommand(Config.openDispatch, function()
     if not isOpen then
         if not IsEntityDead(PlayerPedId()) then
-            isOpen = true
-            SendNUIMessage({
-                action = 'open'
-            })
-            SetNuiFocus(true, true)
+            if ESX.PlayerData.job.name == "police" then
+                isOpen = true
+                SendNUIMessage({
+                    action = 'open'
+                })
+                SetNuiFocus(true, true)
+            else
+                exports['t-notify']:Alert({
+                    style = 'error', 
+                    message = 'No eres policia'
+                })
+            end
         end
     end
 end)

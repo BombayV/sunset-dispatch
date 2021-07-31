@@ -22,6 +22,5 @@ files {
     'html/ui.html',
     'html/css/*.css',
     'html/fonts/*.ttf',
-    'html/img/*.webp',
     'html/js/*.js'
 }

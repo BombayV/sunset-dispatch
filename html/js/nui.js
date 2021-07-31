@@ -66,6 +66,7 @@ after.addEventListener('click', () => {
         slides[currentSlide - 1].style.opacity = "1";
         slideNum.textContent = `${currentSlide} /${slides.length}`;
         timeNum.textContent =  slides[currentSlide - 1].getAttribute('data-time');
+        titleNum.textContent = slides[currentSlide - 1].getAttribute('data-title');
     }
 });
   
@@ -84,8 +85,13 @@ before.addEventListener('click', () => {
         slides[currentSlide - 1].style.opacity = "1";
         slideNum.textContent = `${currentSlide} /${slides.length}`;
         timeNum.textContent =  slides[currentSlide - 1].getAttribute('data-time');
+        titleNum.textContent = slides[currentSlide - 1].getAttribute('data-title');
     }
 });
+
+loc.addEventListener('click', () => {
+    fetchNUI('setCoords', {x: slides[currentSlide - 1].getAttribute('data-x'), y: slides[currentSlide - 1].getAttribute('data-y'), id: slides[currentSlide - 1].getAttribute('data-title')})
+})
 
 const fetchNUI = async (cbname, data) => {
     const options = {
@@ -97,4 +103,8 @@ const fetchNUI = async (cbname, data) => {
     };
     const resp = await fetch(`https://sunset-dispatch/${cbname}`, options);
     return await resp.json();
+}
+
+String.prototype.capitalize = function() {
+    return this.charAt(0).toUpperCase() + this.slice(1);
 }
