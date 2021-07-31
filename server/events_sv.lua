@@ -1,9 +1,7 @@
-ESX = nil 
+ESX = nil
 
 TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
 GlobalState.callNumber = 0
-
-local timeout = false
 
 RegisterNetEvent('sunset:setVehicleNoti', function(model, plate, street, primary, job)
     local source <const> = source
@@ -65,7 +63,6 @@ RegisterNetEvent('sunset:beginServerBlips', function(job)
         if xPlayer.job.name == actualJob then
             local coords = GetEntityCoords(GetPlayerPed(source))
             local targetCoords = GetEntityCoords(GetPlayerPed(xPlayers[i]))
-            local distance = #(coords - targetCoords)
             TriggerClientEvent('sunset:setNewWaypoint', xPlayers[i], coords.x, coords.y, coords.z, job)
         end
     end

@@ -1,10 +1,4 @@
 -- Functions
-function beginBlipRemoval(curBlip)
-	local oldBlip = curBlip
-	Wait(1000)
-	RemoveBlip(oldBlip)
-end
-
 function getStreet(ped)
 	local coords = GetEntityCoords(ped)
 	local stHash = GetStreetNameAtCoord(coords.x, coords.y, coords.z)

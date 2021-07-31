@@ -18,7 +18,7 @@ RegisterNUICallback('setCoords', function(data, cb)
     if isOpen then
         SetNewWaypoint(tonumber(data.x), tonumber(data.y))
         exports['t-notify']:Alert({
-            style = 'success', 
+            style = 'success',
             message = 'Se ha marcado la localizacion a la llamada #' .. data.id
         })
     end
@@ -36,7 +36,7 @@ RegisterCommand(Config.openDispatch, function()
                 SetNuiFocus(true, true)
             else
                 exports['t-notify']:Alert({
-                    style = 'error', 
+                    style = 'error',
                     message = 'No eres policia'
                 })
             end

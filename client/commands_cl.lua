@@ -6,9 +6,8 @@ RegisterCommand(Config.stealVehCommand, function()
 		local model = GetLabelText(GetDisplayNameFromVehicleModel(GetEntityModel(vehicle)))
 		local plate = GetVehicleNumberPlateText(vehicle)
 		local street = getStreet(ped)
-		local primary, secondary = GetVehicleColor(vehicle)
+		local primary = GetVehicleColor(vehicle)
 		primary = Config['ColorNames'][tostring(primary)]
-		secondary = Config['ColorNames'][tostring(secondary)]
 		if model == 'NULL' then
 			model = 'Sin nombre'
 		end

@@ -21,14 +21,12 @@ local function beginBlipRemoval(curBlip)
 end
 
 local currentCall = true
-local isWaypoint = false
 
 -- Events for waypoints
 RegisterNetEvent('sunset:setNewWaypoint', function(x, y, z, job)
 	currentCall = true
 	local isWaypoint = false
 	local ped = PlayerPedId()
-	local coords = GetEntityCoords(ped)
 	CreateThread(function()
 		blip = AddBlipForCoord(x, y, z)
 		SetBlipSprite(blip, Config[job].sprite)
