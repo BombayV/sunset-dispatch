@@ -42,6 +42,8 @@ RegisterCommand(Config.policeCommand, function(source, args)
                     }
                 })
                 TriggerClientEvent('sunset:updateWaypoint')
+                Wait(100)
+                TriggerClientEvent('sunset:setNewWaypoint', xPlayers[i], coords.x, coords.y, coords.z, 'police')
             end
         end
     end
