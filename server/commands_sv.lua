@@ -1,3 +1,5 @@
+inCall = false
+
 RegisterCommand(Config.policeCommand, function(source, args)
     local source <const> = source
     TriggerClientEvent('t-notify:client:Custom', source, {
@@ -16,16 +18,32 @@ RegisterCommand(Config.policeCommand, function(source, args)
             local distance = #(coords - targetCoords)
             local message = table.concat(args, " ", 1)
             TriggerClientEvent('sunset:setNewWaypoint', xPlayers[i], coords.x, coords.y, coords.z, 'police')
-            TriggerClientEvent('t-notify:client:Persist', xPlayers[i], {
-                id = 'policePlayerCreation',
-                step = 'start',
-                options = {
-                    style = 'info',
-                    title = 'Entorno LSPD',
-                    message = '**~g~Mensaje~g~:**' .. message .. '\n **~r~Distancia~r~:** ' .. math.floor(distance) ..  'm\nPresiona [E] para aceptar\n Presiona [Q] para cancelar',
-                    sound = true
-                }
-            })
+            if not inCall then
+                inCall = true
+                TriggerClientEvent('t-notify:client:Persist', xPlayers[i], {
+                    id = 'policePlayerCreation',
+                    step = 'start',
+                    options = {
+                        style = 'info',
+                        title = 'Entorno LSPD',
+                        message = '**~g~Mensaje~g~:**' .. message .. '\n **~r~Distancia~r~:** ' .. math.floor(distance) ..  'm\nPresiona [E] para aceptar\n Presiona [Q] para cancelar',
+                        sound = true
+                    }
+                })
+            else
+
+                TriggerClientEvent('t-notify:client:Persist', xPlayers[i], {
+                    id = 'policePlayerCreation',
+                    step = 'update',
+                    options = {
+                        style = 'info',
+                        title = 'Entorno LSPD',
+                        message = '**~g~Mensaje~g~:**' .. message .. '\n **~r~Distancia~r~:** ' .. math.floor(distance) ..  'm\nPresiona [E] para aceptar\n Presiona [Q] para cancelar',
+                        sound = true
+                    }
+                })
+
+            end
         end
     end
 end)

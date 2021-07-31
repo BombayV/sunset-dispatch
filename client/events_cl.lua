@@ -40,7 +40,7 @@ RegisterNetEvent('sunset:setNewWaypoint', function(x, y, z, job)
 				isWaypoint = true
 				currentCall = false
 				break
-			elseif IsControlJustReleased(1, 38) and not isWaypoint then
+			elseif IsControlJustReleased(1, 44) and not isWaypoint then
 				endCurrentCall('policePlayerCreation')
 				RemoveBlip(blip)
 				isWaypoint = true
