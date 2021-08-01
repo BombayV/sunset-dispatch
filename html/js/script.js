@@ -31,16 +31,14 @@ function insertNewSlide(type, message, model, primary, x, y, title) {
         const img = doc.createElement('img');
         let time = new Date().toLocaleTimeString();
         let vehicle = model.toUpperCase()
-        console.log(vehicle)
         cont.classList.add('container-slides');
         text.classList.add('slide-text');
         vehText.classList.add('slide-text');
         img.classList.add('slide-img');
-    
         text.textContent = message.capitalize();
         vehText.textContent = color;
         img.src = `https://bombayv.github.io/images.github.io/img/${vehicle}.webp`;
-        img.onerror = img.src='https://bombayv.github.io/images.github.io/img/onerror.png'
+        img.alt = "No hay fotos del vehiculo";
     
         cont.setAttribute('data-title', `Call Id: ${title}`)
         cont.setAttribute('data-time', time)
