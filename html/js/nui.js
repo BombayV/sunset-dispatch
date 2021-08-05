@@ -34,26 +34,9 @@ after.addEventListener('click', () => slideChanger('after'));
   
 before.addEventListener('click', () => slideChanger('before'));
 
-loc.addEventListener('click', () => {
-    fetchNUI('setCoords', {x: slides[currentSlide - 1].getAttribute('data-x'), y: slides[currentSlide - 1].getAttribute('data-y'), id: slides[currentSlide - 1].getAttribute('data-title')})
-})
+loc.addEventListener('click', () => setCoords());
 
-del.addEventListener('click', function() {
-    if (slides.length == 1) {
-        slides[currentSlide - 1].remove();
-        slideNum.textContent = `0 /${slides.length}`;
-        preview.style.display = 'flex';
-    } else if (slides.length > 1) {
-        if (currentSlide != 1) {
-            currentSlide--
-            slides[currentSlide].remove();
-        } else {
-            slides[currentSlide - 1].remove();
-        }
-        slides[currentSlide - 1].style.opacity = "1";
-        slideNum.textContent = `${currentSlide} /${slides.length}`;
-    }
-})
+del.addEventListener('click', () => slideChanger('delete'));
 
 // Functions
 const fetchNUI = async (cbname, data) => {
@@ -102,6 +85,22 @@ function slideChanger(type) {
             if (currentSlide > slides.length) {
                 currentSlide = 1;
             }
+        } else if (type == 'delete') {
+            if (slides.length == 1) {
+                slides[currentSlide - 1].remove();
+                slideNum.textContent = `0 /${slides.length}`;
+                preview.style.display = 'flex';
+            } else if (slides.length > 1) {
+                if (currentSlide != 1) {
+                    currentSlide--
+                    slides[currentSlide].remove();
+                } else {
+                    slides[currentSlide - 1].remove();
+                }
+                slides[currentSlide - 1].style.opacity = "1";
+                slideNum.textContent = `${currentSlide} /${slides.length}`;
+            }
+            return
         } else {
             currentSlide--
             if (currentSlide < 1) {

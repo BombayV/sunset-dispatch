@@ -13,10 +13,25 @@ window.addEventListener('message', (e) => {
 })
 
 // Keys setup
-doc.onkeyup = event => {
-    if (event.key == 'Escape') {
+doc.onkeyup = e => {
+    if (e.key == 'Escape') {
         wrapper.style.display = 'none';
         fetchNUI('close', 'cb');
+    } else if (e.key == 'Backspace') {
+        slideChanger('delete')
+    } else if (e.key == 'Enter') {
+        setCoords();
+    } else if (e.key == 'ArrowLeft') {
+        slideChanger('before');
+    } else if (e.key == 'ArrowRight') {
+        slideChanger('after');
+    }   
+}
+
+// Coords function
+function setCoords() {
+    if (slides.length > 0) {
+        fetchNUI('setCoords', {x: slides[currentSlide - 1].getAttribute('data-x'), y: slides[currentSlide - 1].getAttribute('data-y'), id: slides[currentSlide - 1].getAttribute('data-title')})
     }
 }
 

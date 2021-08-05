@@ -2,7 +2,16 @@ local isOpen = false
 
 CreateThread(function()
     while isOpen do
+        -- Exit key
         DisableControlAction(0, 322, true)
+        
+        -- Move slides
+        DisableControlAction(0, 174, true)
+        DisableControlAction(0, 175, true)
+
+        -- Delete and select
+        DisableControlAction(0, 194, true)
+        DisableControlAction(0, 191, true)
     end
 end)
 
