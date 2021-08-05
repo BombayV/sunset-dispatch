@@ -12,6 +12,11 @@ CreateThread(function()
 	end
 
 	ESX.PlayerData = ESX.GetPlayerData()
+
+	TriggerEvent('chat:addSuggestion', '/forzar', 'Envia un msg a la policia de robo de vehiculo', {})
+	TriggerEvent('chat:addSuggestion', '/command', 'Envia un msg de entorno', {
+		{ name="mensaje", help="Descripcion de lo occurido" }
+	})
 end)
 
 local function beginBlipRemoval(curBlip)

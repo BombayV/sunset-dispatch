@@ -1,4 +1,4 @@
 Config = {}
 
 -- Commands
-Config.policeCommand = 'a'
+Config.policeCommand = 'entorno'

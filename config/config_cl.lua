@@ -18,7 +18,7 @@ Config.waitBeforeRemoval = 30000 -- Wait time before removing blip
 
 -- Commands Names
 Config.stealVehCommand = 'forzar' -- Steal Command
-Config.openDispatch = 'opendTest'
+Config.openDispatch = 'dispatch'
 Config.openDispatchDesc = 'Abre el menu de la policia'
 Config.openDispatchKey = 'K'
 
