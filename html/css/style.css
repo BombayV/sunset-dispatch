@@ -24,7 +24,7 @@
     align-items: center;
     flex-direction: column;
     width: 44vh;
-    height: 40vh;
+    height: 50vh;
 
     border-radius: 0.6vh;
     margin-right: 1%;
@@ -68,7 +68,7 @@ select optgroup {
 .dp-tabs {
     position: absolute;
     width: 100%;
-    height: 100%;
+    height: 80%;
     opacity: 1;
 }
 
@@ -137,7 +137,7 @@ select optgroup {
 
 .dp-move-container {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-around;
     align-items: center;
     width: 100%;
     height: 15%;
@@ -151,6 +151,20 @@ select optgroup {
     font-size: 2.6vh;
     color: #a9a9a9;
     z-index: 3;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.fas:hover {
+    transform: scale(1.1vh);
+}
+
+.fa-map-marker-alt:hover {
+    color: #1d82d4;
+}
+
+.fa-trash-alt:hover {
+    color: rgb(207, 16, 48);
 }
 
 .container-slides {
@@ -180,4 +194,38 @@ select optgroup {
     margin-bottom: 1.5%;
     width: 25vh;
     border-radius: 0.6vh;
+}
+
+.dp-slider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 10%;
+}
+
+.btn-slide {
+    display: flex;
+    align-items: center;
+
+    width: 30%;
+    height: 70%;
+
+    border: none;
+
+    font-size: 2.2vh;
+    color: #bbbbbb;
+
+    background-color: #4d4d4d;
+    transition: 0.2s;
+    z-index: 3;
+}
+
+.btn-slide:hover {
+    transform: scale(1.05);
+    color: #85c821;
+}
+
+#before:hover {
+    color: #b12222;
 }

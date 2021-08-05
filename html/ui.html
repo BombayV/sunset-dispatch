@@ -13,7 +13,7 @@
 
     <link rel="preload" href="./fonts/KumbhSans-Bold.ttf" as="font" crossorigin="anonymous" />
     <link rel="preload" href="./fonts/KumbhSans-Regular.ttf" as="font" crossorigin="anonymous" />
-    <style>#wrapper { display: none; }</style>
+    <style>#wrappe { display: none; }</style>
 </head>
 
 <body>
@@ -39,9 +39,12 @@
                         <!--Insert Data-->
                     </div>
                     <div class="dp-move-container">
-                        <i id="before" class="fas fa-backward"></i>
-                        <i id="location" class="fas fa-play"></i>
-                        <i id="after" class="fas fa-forward"></i>
+                        <i id="delete" class="fas fa-trash-alt"></i>
+                        <i id="location" class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div class="dp-slider">
+                        <button id="before" style="border-bottom-left-radius: 0.5vh; border-top-left-radius: 0.5vh; border-right: 0.1vh solid #9c9c9c;" class="btn-slide">-</button>
+                        <button id="after" style="justify-content: flex-end; border-bottom-right-radius: 0.5vh; border-top-right-radius: 0.5vh; border-left: 0.1vh solid #9c9c9c;" class="btn-slide">+</button>
                     </div>
                 </div>
                 <div id="officers" class="dp-tabs officers">

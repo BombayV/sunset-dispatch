@@ -12,6 +12,7 @@ window.addEventListener('message', (e) => {
     }
 })
 
+// Keys setup
 doc.onkeyup = event => {
     if (event.key == 'Escape') {
         wrapper.style.display = 'none';
@@ -19,57 +20,47 @@ doc.onkeyup = event => {
     }
 }
 
+// Slide function
 function insertNewSlide(type, message, model, primary, x, y, title) {
+    const cont = doc.createElement('div');
+    const text = doc.createElement('span');
+    let time = new Date().toLocaleTimeString();
+
+    text.textContent = message;
+    cont.classList.add('container-slides');
+    text.classList.add('slide-text');
+
+    cont.setAttribute('data-title', `Call Id: ${title}`);
+    cont.setAttribute('data-time', time);
+    cont.setAttribute('data-x', x);
+    cont.setAttribute('data-y', y);
     if (type == "veh") {
         let color = 'El vehiculo era de color ' + primary;
         if (primary == undefined) {
             color = 'No se puedo encontrar el color'
         }
-        const cont = doc.createElement('div');
-        const text = doc.createElement('span');
         const vehText = doc.createElement('span')
         const img = doc.createElement('img');
-        let time = new Date().toLocaleTimeString();
         let vehicle = model.toUpperCase()
-        cont.classList.add('container-slides');
-        text.classList.add('slide-text');
         vehText.classList.add('slide-text');
         img.classList.add('slide-img');
-        text.textContent = message.capitalize();
+
         vehText.textContent = color;
         img.src = `https://bombayv.github.io/images.github.io/img/${vehicle}.webp`;
         img.alt = "No hay fotos del vehiculo";
-    
-        cont.setAttribute('data-title', `Call Id: ${title}`)
-        cont.setAttribute('data-time', time)
-        cont.setAttribute('data-x', x)
-        cont.setAttribute('data-y', y)
         cont.appendChild(text);
         cont.appendChild(vehText);
         cont.appendChild(img);
-    
         mainCont.appendChild(cont);
-        for (i = 0; i < slides.length; i++) {
-            slideNum.textContent = `${currentSlide} /${slides.length}`
-        }
-    } else {
-        const cont = doc.createElement('div');
-        const text = doc.createElement('span');
-        let time = new Date().toLocaleTimeString();
-    
-        cont.classList.add('container-slides');
-        text.classList.add('slide-text');
-    
-        text.textContent = message.capitalize();
-    
-        cont.setAttribute('data-title', `Call Id: ${title}`);
-        cont.setAttribute('data-time', time);
-        cont.setAttribute('data-x', x);
-        cont.setAttribute('data-y', y);
+    }
+    if (type != 'veh') {
         cont.appendChild(text);
-        mainCont.appendChild(cont);
-        for (i = 0; i < slides.length; i++) {
-            slideNum.textContent = `${currentSlide} /${slides.length}`
+    }
+    mainCont.appendChild(cont);
+    for (i = 0; i < slides.length; i++) {
+        slideNum.textContent = `${currentSlide} /${slides.length}`
+        if (currentSlide == 0 || slides.length == 1) {
+            slideChanger('after')
         }
     }
 }
