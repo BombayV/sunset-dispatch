@@ -13,10 +13,13 @@ CreateThread(function()
 
 	ESX.PlayerData = ESX.GetPlayerData()
 
-	TriggerEvent('chat:addSuggestion', '/forzar', 'Envia un msg a la policia de robo de vehiculo', {})
+	TriggerEvent('chat:addSuggestion', Config.stealVehCommand, 'Envia un msg a la policia de robo de vehiculo', {})
 	TriggerEvent('chat:addSuggestion', '/entorno', 'Envia un msg de entorno', {
 		{ name="mensaje", help="Descripcion de lo occurido" }
 	})
+	if ESX.PlayerData.job.name == 'police' then
+		TriggerEvent('chat:addSuggestion', Config.openDispatch, Config.openDispatchDesc, {})
+	end
 end)
 
 local function beginBlipRemoval(curBlip)
@@ -43,9 +46,12 @@ RegisterNetEvent('sunset:setNewWaypoint', function(x, y, z, job)
 		EndTextCommandSetBlipName(blip)
 		while currentCall do
 			if IsControlJustReleased(1, 38) and not isWaypoint then
-				endCurrentCall('policePlayerCreation')
-				TriggerServerEvent('sunset:getReceiverName', ped)
+				exports['t-notify']:Persist({
+					id = 'policePlayerCreation',
+					step = 'end'
+				})
 				TriggerServerEvent('sunset:updateCall')
+				TriggerServerEvent('sunset:getReceiverName', ped)
 				SetNewWaypoint(x, y)
 				RemoveBlip(blip)
 				blip = nil
@@ -53,7 +59,10 @@ RegisterNetEvent('sunset:setNewWaypoint', function(x, y, z, job)
 				currentCall = false
 				break
 			elseif IsControlJustReleased(1, 44) and not isWaypoint then
-				endCurrentCall('policePlayerCreation')
+				exports['t-notify']:Persist({
+					id = 'policePlayerCreation',
+					step = 'end'
+				})
 				TriggerServerEvent('sunset:updateCall')
 				RemoveBlip(blip)
 				isWaypoint = true

@@ -9,10 +9,3 @@ function getStreet(ped)
 		return 'Sin nombre'
 	end
 end
-
-function endCurrentCall(id)
-	exports['t-notify']:Persist({
-		id = id,
-		step = 'end'
-	})
-end

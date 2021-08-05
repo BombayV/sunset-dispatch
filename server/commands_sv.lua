@@ -37,6 +37,7 @@ RegisterCommand(Config.policeCommand, function(source, args)
                 TriggerClientEvent('sunset:setNewWaypoint', xPlayers[i], coords.x, coords.y, coords.z, 'police')
                 return
             elseif inCall then
+                TriggerClientEvent('sunset:updateWaypoint', xPlayers[i])
                 TriggerClientEvent('t-notify:client:Persist', xPlayers[i], {
                     id = 'policePlayerCreation',
                     step = 'update',
@@ -47,8 +48,6 @@ RegisterCommand(Config.policeCommand, function(source, args)
                         sound = true
                     }
                 })
-                TriggerClientEvent('sunset:updateWaypoint', xPlayers[i])
-                Wait(1000)
                 TriggerClientEvent('sunset:setNewWaypoint', xPlayers[i], coords.x, coords.y, coords.z, 'police')
             end
         end

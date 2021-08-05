@@ -34,6 +34,7 @@ RegisterNetEvent('sunset:setVehicleNoti', function(model, plate, street, primary
                 TriggerClientEvent('sunset:setNewWaypoint', xPlayers[i], coords.x, coords.y, coords.z, 'forzar')
                 return
             elseif inCall then
+                TriggerClientEvent('sunset:updateWaypoint', xPlayers[i])
                 TriggerClientEvent('t-notify:client:Persist', xPlayers[i], {
                     id = 'policePlayerCreation',
                     step = 'update',
@@ -44,8 +45,6 @@ RegisterNetEvent('sunset:setVehicleNoti', function(model, plate, street, primary
                         sound  =  true
                     }
                 })
-                TriggerClientEvent('sunset:updateWaypoint', xPlayers[i])
-                Wait(1000)
                 TriggerClientEvent('sunset:setNewWaypoint', xPlayers[i], coords.x, coords.y, coords.z, 'forzar')
             end
         end

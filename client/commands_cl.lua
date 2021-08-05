@@ -20,3 +20,24 @@ RegisterCommand(Config.stealVehCommand, function()
 		})
 	end
 end)
+
+RegisterCommand(Config.openDispatch, function()
+    if not isOpen then
+        if not IsEntityDead(PlayerPedId()) then
+            if ESX.PlayerData.job.name == "police" then
+                isOpen = true
+                SendNUIMessage({
+                    action = 'open'
+                })
+                SetNuiFocus(true, true)
+            else
+                exports['t-notify']:Alert({
+                    style = 'error',
+                    message = 'No eres policia'
+                })
+            end
+        end
+    end
+end)
+
+RegisterKeyMapping(Config.openDispatch, Config.openDispatchDesc, 'keyboard', Config.openDispatchKey)
